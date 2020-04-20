@@ -3,7 +3,7 @@ Primary function of recipe here
 """
 
 import mbuild as mb
-from mbuild_bulk_water.utils import utils
+from mbuild_bulk_water.bulk_water.utils import utils
 
 class build_water_box(mb.Compound, n_compounds, forcefield='spce'):
     """
