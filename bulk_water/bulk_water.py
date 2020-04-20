@@ -5,6 +5,7 @@ Primary function of recipe here
 import mbuild as mb
 import os
 from pkg_resources import resource_filename
+from foyer import Forcefield
 
 class build_water_box(mb.Compound):
     """
@@ -29,14 +30,12 @@ class build_water_box(mb.Compound):
         water_box = mb.fill_box(water, n_compounds, density=1000)
 
         # Type water system
-        ff = _get_ff(_get_ff_path(forcefield))
+        ff = _get_ff(forcefield)
 
         water_PM = ff.apply(water_box)
 
-        return water_PM
-
 def _get_water():
-    cache_dir = resource_filename('mbuild_bulk_water', 'lib')
+    cache_dir = resource_filename('bulk_water', 'lib')
     filename = 'water.mol2'
     water = mb.load(os.path.join(cache_dir, filename))
     water.name = 'SOL'
@@ -46,7 +45,7 @@ def _get_water():
 def _get_ff_path(ff_name):
     """Get the path to a force field xml file """
     """in a directory of the same name."""
-    ff_path = resource_filename('mbuild_bulk_water',
+    ff_path = resource_filename('bulk_water',
                                 os.path.join('lib', ff_name + '.xml'))
     return ff_path
 
@@ -54,6 +53,6 @@ def _get_ff(ff_name):
     """Get the Forcefield object from a force field xml file """
     """in a directory of the same name."""
     ff_name = ff_name.lower()
-    ff_path = get_ff_path(ff_name)
+    ff_path = _get_ff_path(ff_name)
     FF = Forcefield(ff_path)
     return FF
