@@ -1,6 +1,7 @@
 numpy
 pytest
 mbuild
+foyer
 mdtraj
 parmed
 setuptools
